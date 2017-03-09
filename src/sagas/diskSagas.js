@@ -11,8 +11,7 @@ function* fetchDisks() {
     // const json = yield call(callApi, 'getFixedData', 'GET')
     const json = yield call(callApi, 'signup', 'GET')
     const result = normalize(json, schema.arrayOfDisks)
-    // yield put({ type: ActionTypes.disk.DISK_GET_SUCCEEDED, ...{ result } })
-    yield put({ type: ActionTypes.disk.DISK_GET_SUCCEEDED, ...{ mess: result } })
+    yield put({ type: ActionTypes.disk.DISK_GET_SUCCEEDED, ...{ result } })
   } catch (e) {
     yield put({ type: ActionTypes.disk.DISK_GET_FAILED, message: e.message })
   }

@@ -41,8 +41,8 @@ class Disks extends Component {
                 return (
                   <tr key={i} >
                     <td>{i+1}</td>
-                    <td>{disks.entities[item].first_Name}</td>
-                    <td>{disks.entities[item].last_Name}</td>
+                    <td>{disks.entities[item].id}</td>
+                    <td>{disks.entities[item].entity}</td>
                     <td>
                       <button type="button" >删除</button>&emsp;
                       <button type="button" >修改</button>
