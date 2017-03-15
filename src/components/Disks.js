@@ -22,9 +22,13 @@ class Disks extends Component {
 
   saveDisk() {
     const { firstName, lastName } = this.state
-    const { saveDisk } = this.props
+    const { saveDisk, getDisks } = this.props
     saveDisk({
       firstName, lastName
+    }).then(() => {
+      console.info('执行完毕')
+      getDisks()
+      console.info('查询完毕')
     })
   }
 

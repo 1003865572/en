@@ -15,17 +15,18 @@ function* fetchDisks() {
   }
 }
 
-function* saveDisk(data, resolve, reject) {
+function* saveDisk(data) {
   yield put({ type: ActionTypes.disk.DISK_SAVE_REQUEST })
+  console.info(data.resolve)
   try {
+    console.info('开始执行')
     const json = yield call(callApi, 'insertName', 'POST', data.data)
     const result = normalize(json, schema.arrayOfDisks)
     yield put({ type: ActionTypes.disk.DISK_SAVE_SUCCEEDED, ...{ result } })
-    console.info(resolve)
-    // yield resolve()
+    yield data.resolve()
   } catch (e) {
     yield put({ type: ActionTypes.disk.DISK_SAVE_FAILED, message: e.message })
-    // yield reject()
+    yield data.reject()
   }
 }
 
