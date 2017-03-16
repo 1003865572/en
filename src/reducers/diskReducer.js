@@ -1,6 +1,11 @@
 import * as ActionTypes from '../actionTypes/diskTypes'
 
 const initialState = {
+  entity:{
+    id: null,
+    firstName: null,
+    lastName: null
+  },
   entities: {
     di_0: {
       'firstName': '11',

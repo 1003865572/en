@@ -8,12 +8,16 @@ class Disks extends Component {
     this.state={
       aa: 123,
       firstName: '11',
-      lastName: '22'
+      lastName: '22',
+      updateId: null,
+      updateFirstName: '',
+      updateLastName: ''
     }
     this.getDisks = this.getDisks.bind(this)
     this.saveDisk = this.saveDisk.bind(this)
     this.inputChange = this.inputChange.bind(this)
     this.deleteDisk = this.deleteDisk.bind(this)
+    this.update = this.update.bind(this)
   }
 
   getDisks() {
@@ -49,12 +53,36 @@ class Disks extends Component {
     this.setState(o)
   }
 
+  update(id) {
+    const { updateId, updateFirstName, updateLastName } = this.state
+    /**
+      1、改变状态
+      2、getDisk
+      3、写入
+      4、updateDisk
+      5、成功后状态改回
+    */
+    // 修改
+    if (updateId !== id) {
+      this.setState({ updateId: id })
+      // getDisk
+    } else {
+      //保存
+      let result = {
+        id,
+        updateFirstName,
+        updateLastName
+      }
+
+      this.setState({ updateId: null })
+    }
+  }
+
   render() {
     const { disks } = this.props
-    const { aa, firstName, lastName } = this.state
+    const { aa, firstName, lastName, updateId, updateFirstName, updateLastName } = this.state
     return (
       <div>
-
         <Table striped bordered condensed hover  >
           <thead>
             <tr>
@@ -93,8 +121,35 @@ class Disks extends Component {
                 return (
                   <tr key={i} >
                     <td>{disks.entities[item].id}</td>
-                    <td>{disks.entities[item].firstName}</td>
-                    <td>{disks.entities[item].lastName}</td>
+
+                    <td>
+                      {
+                        updateId === disks.entities[item].id ? (
+                          <input
+                            type="text"
+                            value={updateFirstName}
+                            onChange={ e => this.inputChange(e, 'updateFirstName') }
+                            placeholder="输入..."
+                          />
+                        ) : (
+                          disks.entities[item].firstName
+                        )
+                      }
+                    </td>
+                    <td>
+                    {
+                      updateId === disks.entities[item].id ? (
+                        <input
+                          type="text"
+                          value={updateLastName}
+                          onChange={ e => this.inputChange(e, 'updateLastName') }
+                          placeholder="输入..."
+                        />
+                      ) : (
+                        disks.entities[item].lastName
+                      )
+                    }
+                    </td>
                     <td>
                       <button
                         type="button"
@@ -102,7 +157,12 @@ class Disks extends Component {
                       >
                         删除
                       </button>&emsp;
-                      <button type="button"  >修改</button>
+                      <button
+                        type="button"
+                        onClick={() => this.update(disks.entities[item].id)}
+                      >
+                        {updateId === disks.entities[item].id ? '保存' : '修改'}
+                      </button>
                     </td>
                   </tr>
                 )

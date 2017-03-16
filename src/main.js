@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom'
 import configureStore from './store/configureStore'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import RouterDemo from './router/routerDemo'
-import './style/index.scss'
 import '../node_modules/bootstrap/dist/css/bootstrap.css'
+import './style/index.scss'
 
 injectTapEventPlugin({
   shouldRejectClick: () => {
