@@ -14,6 +14,11 @@ const mapDispatchProps = dispatch => ({
     return new Promise((resolve, reject) => {
        dispatch(Actions.saveDisk(data, resolve, reject))
     })
+  },
+  deleteDisk(id) {
+    return new Promise((resolve, reject) => {
+      dispatch(Actions.deleteDisk(id, resolve, reject))
+    })
   }
 })
 

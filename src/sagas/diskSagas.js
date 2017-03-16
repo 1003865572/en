@@ -7,7 +7,7 @@ import * as schema from '../actions/schema'
 function* fetchDisks() {
   yield put({ type: ActionTypes.disk.DISK_GET_REQUEST })
   try {
-    const json = yield call(callApi, 'signup', 'GET')
+    const json = yield call(callApi, 'getDisk', 'GET')
     const result = normalize(json, schema.arrayOfDisks)
     yield put({ type: ActionTypes.disk.DISK_GET_SUCCEEDED, ...{ result } })
   } catch (e) {
@@ -20,7 +20,7 @@ function* saveDisk(data) {
   console.info(data.resolve)
   try {
     console.info('开始执行')
-    const json = yield call(callApi, 'insertName', 'POST', data.data)
+    const json = yield call(callApi, 'insertDisk', 'POST', data.data)
     const result = normalize(json, schema.arrayOfDisks)
     yield put({ type: ActionTypes.disk.DISK_SAVE_SUCCEEDED, ...{ result } })
     yield data.resolve()
@@ -30,9 +30,24 @@ function* saveDisk(data) {
   }
 }
 
+function* deleteDisk(data) {
+  console.info(data)
+  yield put({ type: ActionTypes.disk.DISK_DEL_REQUEST })
+  try {
+    const json = yield call(callApi, 'deleteDisk', 'POST', {id: data.id})
+    const result = normalize(json, schema.arrayOfDisks)
+    yield put({ type: ActionTypes.disk.DISK_DEL_SUCCEEDED, ...{ result } })
+    yield data.resolve()
+  } catch (e) {
+    yield put({ type: ActionTypes.disk.DISK_DEL_FAILED, message: e.message })
+    yield data.reject()
+  }
+}
+
 function* fetchWatcher() {
   yield takeLatest(ActionTypes.disk.DISK_GET_REQUESTED, fetchDisks)
   yield takeLatest(ActionTypes.disk.DISK_SAVE_REQUESTED, saveDisk)
+  yield takeLatest(ActionTypes.disk.DISK_DEL_REQUESTED, deleteDisk)
 }
 
 function* diskSaga() {

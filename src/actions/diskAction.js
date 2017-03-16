@@ -10,3 +10,10 @@ export const saveDisk = (data, resolve, reject) => ({
   resolve,
   reject
 })
+
+export const deleteDisk = (id, resolve, reject) => ({
+  type: ActionTypes.disk.DISK_DEL_REQUESTED,
+  id,
+  resolve,
+  reject
+})

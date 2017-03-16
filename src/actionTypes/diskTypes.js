@@ -2,7 +2,8 @@ const types = [
   'GET',
   'PULL',
   'PUSH',
-  'SAVE'
+  'SAVE',
+  'DEL'
 ]
 
 const requestType = [

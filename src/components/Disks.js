@@ -7,19 +7,23 @@ class Disks extends Component {
     super(props)
     this.state={
       aa: 123,
-      firstName: '',
-      lastName: ''
+      firstName: '11',
+      lastName: '22'
     }
     this.getDisks = this.getDisks.bind(this)
     this.saveDisk = this.saveDisk.bind(this)
     this.inputChange = this.inputChange.bind(this)
+    this.deleteDisk = this.deleteDisk.bind(this)
   }
 
   getDisks() {
     const { getDisks } = this.props
     getDisks()
   }
-
+  componentDidMount() {
+    const { getDisks } = this.props
+    getDisks()
+  }
   saveDisk() {
     const { firstName, lastName } = this.state
     const { saveDisk, getDisks } = this.props
@@ -29,6 +33,13 @@ class Disks extends Component {
       console.info('执行完毕')
       getDisks()
       console.info('查询完毕')
+    })
+  }
+
+  deleteDisk(id) {
+    const { deleteDisk, getDisks } = this.props
+    deleteDisk(id).then(() => {
+      getDisks()
     })
   }
 
@@ -81,12 +92,17 @@ class Disks extends Component {
               disks.ids.map((item, i) => {
                 return (
                   <tr key={i} >
-                    <td>{i+1}</td>
+                    <td>{disks.entities[item].id}</td>
                     <td>{disks.entities[item].firstName}</td>
                     <td>{disks.entities[item].lastName}</td>
                     <td>
-                      <button type="button" >删除</button>&emsp;
-                      <button type="button" >修改</button>
+                      <button
+                        type="button"
+                        onClick={() => this.deleteDisk(disks.entities[item].id) }
+                      >
+                        删除
+                      </button>&emsp;
+                      <button type="button"  >修改</button>
                     </td>
                   </tr>
                 )
