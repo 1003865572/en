@@ -31,7 +31,6 @@ function* saveDisk(data) {
 }
 
 function* deleteDisk(data) {
-  console.info(data)
   yield put({ type: ActionTypes.disk.DISK_DEL_REQUEST })
   try {
     const json = yield call(callApi, 'deleteDisk', 'POST', {id: data.id})
@@ -44,10 +43,39 @@ function* deleteDisk(data) {
   }
 }
 
+function* getEntity(data){
+  // 查询
+  yield put({ type: ActionTypes.disk.DISK_GET_ENTITY_REQUEST })
+  try {
+    const json = yield call(callApi, 'getEntity', "POST", { id: data.id })
+    yield put({ type: ActionTypes.disk.DISK_GET_ENTITY_SUCCEEDED, ...{ entity: json.result[0] } })
+    yield data.resolve(json.result[0])
+  } catch (e) {
+    yield put({ type: ActionTypes.disk.DISK_GET_ENTITY_FAILED, message: e.message })
+    yield data.reject()
+  }
+}
+
+function* updateDisk(data) {
+  // 修改
+  yield put({ type: ActionTypes.disk.DISK_UPDATE_REQUEST })
+  try {
+    console.info(data)
+    const json = yield call(callApi, 'insertDisk', 'POST', data.disk)
+    yield put({ type: ActionTypes.disk.DISK_UPDATE_SUCCEEDED })
+    yield data.resolve(json)
+  } catch (e) {
+    yield put({ type: ActionTypes.disk.DISK_UPDATE_FAILED, message: e.message })
+    yield data.reject()
+  }
+}
+
 function* fetchWatcher() {
   yield takeLatest(ActionTypes.disk.DISK_GET_REQUESTED, fetchDisks)
   yield takeLatest(ActionTypes.disk.DISK_SAVE_REQUESTED, saveDisk)
   yield takeLatest(ActionTypes.disk.DISK_DEL_REQUESTED, deleteDisk)
+  yield takeLatest(ActionTypes.disk.DISK_GET_ENTITY_REQUESTED, getEntity)
+  yield takeLatest(ActionTypes.disk.DISK_UPDATE_REQUESTED, updateDisk)
 }
 
 function* diskSaga() {

@@ -17,3 +17,17 @@ export const deleteDisk = (id, resolve, reject) => ({
   resolve,
   reject
 })
+
+export const getEntity = (id, resolve, reject) => ({
+  type: ActionTypes.disk.DISK_GET_ENTITY_REQUESTED,
+  id,
+  resolve,
+  reject
+})
+
+export const updateDisk = (disk, resolve, reject) => ({
+  type: ActionTypes.disk.DISK_UPDATE_REQUESTED,
+  disk,
+  resolve,
+  reject
+})

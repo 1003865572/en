@@ -2,9 +2,9 @@ import * as ActionTypes from '../actionTypes/diskTypes'
 
 const initialState = {
   entity:{
-    id: null,
-    firstName: null,
-    lastName: null
+    id: 1,
+    firstName: 1,
+    lastName: 1
   },
   entities: {
     di_0: {
@@ -36,6 +36,9 @@ const diskReduer = (state = initialState, action) => {
       state.ids = result
       state.entities = entities.disk
       return {...state}
+    case ActionTypes.disk.DISK_GET_ENTITY_SUCCEEDED:
+      state.entity = action.entity
+      return { ...state}
     default:
       return state
   }

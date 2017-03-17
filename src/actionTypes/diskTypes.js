@@ -1,10 +1,19 @@
 const types = [
   'GET',
-  'PULL',
-  'PUSH',
+  'GET_ENTITY',
   'SAVE',
-  'DEL'
+  'DEL',
+  'UPDATE'
 ]
+/*
+  增
+
+  删
+  改
+  查
+*/
+
+
 
 const requestType = [
   'REQUESTED',

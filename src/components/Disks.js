@@ -55,6 +55,7 @@ class Disks extends Component {
 
   update(id) {
     const { updateId, updateFirstName, updateLastName } = this.state
+    const { getEntity, updateDisk, getDisks } = this.props
     /**
       1、改变状态
       2、getDisk
@@ -65,15 +66,22 @@ class Disks extends Component {
     // 修改
     if (updateId !== id) {
       this.setState({ updateId: id })
-      // getDisk
+      getEntity(id).then((data) => {
+        this.setState({
+          updateFirstName: data.firstName,
+          updateLastName: data.lastName
+        })
+      })
     } else {
       //保存
       let result = {
         id,
-        updateFirstName,
-        updateLastName
+        firstName: updateFirstName,
+        lastName: updateLastName
       }
-
+      updateDisk(result).then(() => {
+        getDisks()
+      })
       this.setState({ updateId: null })
     }
   }
